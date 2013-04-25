@@ -1,0 +1,228 @@
+html {
+    height: 100%;
+    overflow-y: hidden;
+}
+
+body {
+    height: 100%;
+    background-color: white;
+    color: #444;
+    font-family: "DejaVu Sans", "Helvetica", "Ariel", "sans-serif";
+}
+
+draggable {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.abs  {
+    position: absolute;
+}
+
+.nav p {
+    display: inline;
+}
+
+.nav a {
+    color: #08c;
+}
+
+.nav-list li a {
+    vertical-align: middle;
+}
+
+#container {
+    height: 100%;
+}
+
+#login-logo {
+    display: block;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#header-logo {
+    display: block;
+    margin: 8px;
+    float: left;
+}
+
+#welcome {
+    font-weight: bold;
+    position: absolute;
+    left: 214px;
+    bottom: 0px;
+    margin-left: 20px;
+    margin-bottom: 9px;
+}
+
+#inner-container {
+    height: 100%;
+}
+
+#editor-container {
+    padding: 0px;
+}
+
+canvas {
+
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+
+#header-tools {
+    font-size: 16px;
+}
+
+#editor-left-nav {
+    font-size: 16px;
+    background-color: #dddddd;
+    padding-top: 20px;
+    width: 230px;
+    height: 100%;
+    float: left;
+}
+
+#editor-canvas-outer {
+    overflow: hidden;
+    position: absolute;
+    top: 85px;
+    left: 230px;
+    right: 0px;
+    bottom: 0px;
+    padding: 10px;
+}
+
+#editor-canvas-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+#c {
+    width: 100%;
+    height: 100%;
+}
+
+.canvas-container {
+    width: 100%;
+    height: 100%;
+}
+
+#logout {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    padding-bottom: 9px;
+    margin-right: 20px;
+}
+
+#logout a {
+    color: #444;
+    text-decoration: none;
+}
+
+#login {
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#main {
+    background-color: white;
+    padding: 40px;
+    padding-top: 10px;
+    font-size: 24px;
+}
+
+#manager-header {
+    position: relative;
+    font-size: 24px;
+    background-color: #dddddd;
+    height: 75px;
+    overflow: hidden;
+    border-style: solid;
+    border-width: 10px 0 0 0;
+    border-color: #888;
+}
+
+
+#new-model-box {
+    position: absolute;
+    background-color: #dddddd;
+    width: 400px;
+    height: 256px;
+    overflow: auto;
+    border-style: solid;
+    border-width: 10px;
+    border-color: #888;
+    border-radius: 25px;
+    left:50%;
+    top:50%;
+    margin:-150px 0 0 -200px;
+}
+
+#new-model-box p {
+    padding-top: 9px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+#login-box {
+    position: absolute;
+    background-color: #dddddd;
+    width: 400px;
+    height: 256px;
+    overflow: auto;
+    border-style: solid;
+    border-width: 10px;
+    border-color: #888;
+    border-radius: 25px;
+    left:50%;
+    top:50%;
+    margin:-150px 0 0 -200px;
+}
+
+.error {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 6px;
+}
+
+#title {
+    margin-top: 20px;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.breathing-room {
+    margin-top: 40px;
+}
+
+html {
+    font-family: "DejaVu Sans", "Helvetica", "Ariel", "sans-serif";
+}
+
+
+footer {
+    font-family: 'Droid Sans';
+    clear: both;
+    text-align: center;
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+}
