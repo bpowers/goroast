@@ -9,8 +9,8 @@ import (
 	"fmt"
 	"github.com/bpowers/seshcookie"
 	"log"
-	"os"
 	"net/http"
+	"os"
 	"runtime"
 	"runtime/pprof"
 )
