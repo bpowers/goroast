@@ -96,7 +96,7 @@ func main() {
 
 	rootHandler := seshcookie.NewSessionHandler(
 		&AuthHandler{
-			http.FileServer(http.Dir("./static")),
+			&statusHandler{http.FileServer(http.Dir("./static"))},
 			&authorizer{"."},
 			&decider{},
 		},
