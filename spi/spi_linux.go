@@ -46,24 +46,24 @@ type SPIIOTransaction struct {
 const sizeof_SPIIOTransaction = 32
 
 var (
-	SPI_IOC_RD_MODE = IOR(SPI_IOC_MAGIC, 1, 1)
-	SPI_IOC_WR_MODE = IOW(SPI_IOC_MAGIC, 1, 1)
+	SPI_IOC_RD_MODE = _IOR(SPI_IOC_MAGIC, 1, 1)
+	SPI_IOC_WR_MODE = _IOW(SPI_IOC_MAGIC, 1, 1)
 
 	// Read / Write SPI bit justification
-	SPI_IOC_RD_LSB_FIRST = IOR(SPI_IOC_MAGIC, 2, 1)
-	SPI_IOC_WR_LSB_FIRST = IOW(SPI_IOC_MAGIC, 2, 1)
+	SPI_IOC_RD_LSB_FIRST = _IOR(SPI_IOC_MAGIC, 2, 1)
+	SPI_IOC_WR_LSB_FIRST = _IOW(SPI_IOC_MAGIC, 2, 1)
 
 	// Read / Write SPI device word length (1..N)
-	SPI_IOC_RD_BITS_PER_WORD = IOR(SPI_IOC_MAGIC, 3, 1)
-	SPI_IOC_WR_BITS_PER_WORD = IOW(SPI_IOC_MAGIC, 3, 1)
+	SPI_IOC_RD_BITS_PER_WORD = _IOR(SPI_IOC_MAGIC, 3, 1)
+	SPI_IOC_WR_BITS_PER_WORD = _IOW(SPI_IOC_MAGIC, 3, 1)
 
 	// Read / Write SPI device default max speed hz
-	SPI_IOC_RD_MAX_SPEED_HZ = IOR(SPI_IOC_MAGIC, 4, 4)
-	SPI_IOC_WR_MAX_SPEED_HZ = IOW(SPI_IOC_MAGIC, 4, 4)
+	SPI_IOC_RD_MAX_SPEED_HZ = _IOR(SPI_IOC_MAGIC, 4, 4)
+	SPI_IOC_WR_MAX_SPEED_HZ = _IOW(SPI_IOC_MAGIC, 4, 4)
 )
 
 func SPI_IOC_MESSAGE(count int) int32 {
-	return IOW(SPI_IOC_MAGIC, 0, count*sizeof_SPIIOTransaction)
+	return _IOW(SPI_IOC_MAGIC, 0, count*sizeof_SPIIOTransaction)
 }
 
 func Transaction(f *os.File, write, read []byte) error {

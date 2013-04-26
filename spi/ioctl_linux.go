@@ -36,19 +36,19 @@ const (
 	_IOC_READ  = 2
 )
 
-func IOC(dir, ty, nr, size int) int32 {
+func _IOC(dir, ty, nr, size int) int32 {
 	return (int32)((dir << _IOC_DIRSHIFT) |
 		(ty << _IOC_TYPESHIFT) |
 		(nr << _IOC_NRSHIFT) |
 		(size << _IOC_SIZESHIFT))
 }
 
-func IOR(ty, nr, size int) int32 {
-	return IOC(_IOC_READ, ty, nr, size)
+func _IOR(ty, nr, size int) int32 {
+	return _IOC(_IOC_READ, ty, nr, size)
 }
 
-func IOW(ty, nr, size int) int32 {
-	return IOC(_IOC_WRITE, ty, nr, size)
+func _IOW(ty, nr, size int) int32 {
+	return _IOC(_IOC_WRITE, ty, nr, size)
 }
 
 func ioctl(fd uintptr, name int32, data unsafe.Pointer) syscall.Errno {
