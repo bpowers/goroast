@@ -5,6 +5,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"net/http"
 	"os/exec"
@@ -18,20 +19,16 @@ type statusHandler struct {
 func (h *statusHandler) serveStatus(w http.ResponseWriter, req *http.Request) {
 	managerTemplate := template.Must(template.ParseFiles("./tmpl/status.html"))
 	data := "&lt;no data&gt;"
-	var out []byte
+	var out bytes.Buffer
 
 	cmd := exec.Command("/usr/local/bin/roastd")
+	cmd.Stdout = &out
 	err := cmd.Run()
 	if err != nil {
 		fmt.Printf("exec.Command('/usr/local/bin/roastd'): %s\n", err)
 		goto out
 	}
-	out, err = cmd.Output()
-	if err != nil {
-		fmt.Printf("cmd.Output(): %s\n", err)
-		goto out
-	}
-	data = string(out)
+	data = out.String()
 
 out:
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
