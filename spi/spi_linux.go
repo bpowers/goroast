@@ -88,5 +88,9 @@ func Transaction(f *os.File, write, read []byte) error {
 		RXBuf: uint64(uintptr(rp)),
 		Len:   length,
 	}
-	return ioctl(f.Fd(), SPI_IOC_MESSAGE(1), unsafe.Pointer(&trx))
+	result := ioctl(f.Fd(), SPI_IOC_MESSAGE(1), unsafe.Pointer(&trx))
+	if result != 0 {
+		return fmt.Errorf("ioctl result of %d", result)
+	}
+	return nil
 }

@@ -29,7 +29,7 @@ func (m *Max31855) Read() (Celsius, error) {
 	buf := make([]byte, 4)
 
 	if err := spi.Transaction(m.f, nil, buf); err != nil {
-		return 0, fmt.Errorf("spi.Transaction(%v, nil, buf): %s", err)
+		return 0, fmt.Errorf("spi.Transaction(%v, nil, buf): %s", m.f, err)
 	}
 
 	fmt.Printf("omfg, read something: %#v\n", buf)
