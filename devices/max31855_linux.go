@@ -6,6 +6,7 @@ package devices
 
 import (
 	"fmt"
+	"github.com/bpowers/goroast/spi"
 	"os"
 )
 
@@ -27,8 +28,11 @@ func NewMax31855(path string) (*Max31855, error) {
 func (m *Max31855) Read() (Celsius, error) {
 	buf := make([]byte, 4)
 
-	//
-	_ = buf
+	if err := spi.Transaction(m.f, nil, buf); err != nil {
+		return 0, fmt.Errorf("spi.Transaction(%v, nil, buf): %s", err)
+	}
+
+	fmt.Printf("omfg, read something: %#v\n", buf)
 
 	return 0, fmt.Errorf("not implemented")
 }

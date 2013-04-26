@@ -42,6 +42,7 @@ type SPIIOTransaction struct {
 	CSChange    uint8
 	Pad         uint32
 }
+
 const sizeof_SPIIOTransaction = 32
 
 var (
