@@ -7,6 +7,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/bpowers/goroast/devices"
 	"log"
 	"os"
 	"runtime"
@@ -87,5 +88,10 @@ func main() {
 		return
 	}
 
+	tc1, err := devices.NewMax31855("/dev/spidev0.0")
+	if err != nil {
+		fmt.Printf("error: devices.NewMax31855('/dev/spidev0.0'): %s\n", err)
+	}
 	// TODO: loop and do stuff
+	_ = tc1
 }
