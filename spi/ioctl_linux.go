@@ -7,6 +7,11 @@
 
 package spi
 
+import (
+	"syscall"
+	"unsafe"
+)
+
 const (
 	_IOC_NRBITS   = 8
 	_IOC_TYPEBITS = 8
@@ -44,4 +49,9 @@ func IOR(ty, nr, size int) int32 {
 
 func IOW(ty, nr, size int) int32 {
 	return IOC(_IOC_WRITE, ty, nr, size)
+}
+
+func ioctl(fd uintptr, name int32, data unsafe.Pointer) syscall.Errno {
+	_, _, err := syscall.RawSyscall(syscall.SYS_IOCTL, fd, uintptr(name), uintptr(data))
+	return err
 }

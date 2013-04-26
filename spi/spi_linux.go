@@ -7,6 +7,12 @@
 
 package spi
 
+import (
+	"fmt"
+	"os"
+	"unsafe"
+)
+
 const (
 	SPI_CPHA = 0x01
 	SPI_CPOL = 0x02
@@ -36,6 +42,7 @@ type SPIIOTransaction struct {
 	CSChange    uint8
 	Pad         uint32
 }
+const sizeof_SPIIOTransaction = 32
 
 var (
 	SPI_IOC_RD_MODE = IOR(SPI_IOC_MAGIC, 1, 1)
@@ -53,3 +60,28 @@ var (
 	SPI_IOC_RD_MAX_SPEED_HZ = IOR(SPI_IOC_MAGIC, 4, 4)
 	SPI_IOC_WR_MAX_SPEED_HZ = IOW(SPI_IOC_MAGIC, 4, 4)
 )
+
+func SPI_IOC_MESSAGE(count int) int32 {
+	return IOW(SPI_IOC_MAGIC, 0, count*sizeof_SPIIOTransaction)
+}
+
+func Transaction(f *os.File, write, read []byte) error {
+	if write != nil && read != nil {
+		if len(write) != len(read) {
+			return fmt.Errorf("write and read size mismatch (%d vs %d)",
+				len(write), len(read))
+		}
+	}
+	var length uint32
+	if write != nil {
+		length = uint32(len(write))
+	} else {
+		length = uint32(len(read))
+	}
+	trx := SPIIOTransaction{
+		TXBuf: uint64(uintptr(unsafe.Pointer(&write[0]))),
+		RXBuf: uint64(uintptr(unsafe.Pointer(&write[0]))),
+		Len:   length,
+	}
+	return ioctl(f.Fd(), SPI_IOC_MESSAGE(1), unsafe.Pointer(&trx))
+}
