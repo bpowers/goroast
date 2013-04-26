@@ -101,5 +101,5 @@ func main() {
 		fmt.Printf("error: tc1.Read(): %s\n", err)
 		return
 	}
-	fmt.Printf("SUCCESS!! temp: %f°C\n", temp)
+	fmt.Printf("temp: %f°C (%f°F)\n", temp, temp*1.8 + 32)
 }
