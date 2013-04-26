@@ -91,7 +91,15 @@ func main() {
 	tc1, err := devices.NewMax31855("/dev/spidev0.0")
 	if err != nil {
 		fmt.Printf("error: devices.NewMax31855('/dev/spidev0.0'): %s\n", err)
+		return
 	}
+	defer tc1.Close()
+
 	// TODO: loop and do stuff
-	_ = tc1
+	temp, err := tc1.Read()
+	if err != nil {
+		fmt.Printf("error: tc1.Read(): %s\n", err)
+		return
+	}
+	fmt.Printf("SUCCESS!! temp: %f°C\n", temp)
 }
