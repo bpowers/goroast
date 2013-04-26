@@ -32,9 +32,7 @@ func (m *Max31855) Read() (Celsius, error) {
 		return 0, fmt.Errorf("spi.Transaction(%v, nil, buf): %s", m.f, err)
 	}
 
-	fmt.Printf("omfg, read something: %#v\n", buf)
-
-	return 0, fmt.Errorf("not implemented")
+	return Celsius(.25 * float64(buf[0] << 6 | buf[1] >> 2)), nil
 }
 
 func (m *Max31855) Close() {
