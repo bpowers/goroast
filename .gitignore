@@ -1,3 +1,6 @@
 *~
 /roastweb/.auth/
 /roastweb/site/
+/roastweb/roastweb
+/roastd/roastd
+/roastctl/roastctl
