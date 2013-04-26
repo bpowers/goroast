@@ -100,7 +100,7 @@ func main() {
 		fmt.Printf("error: tc1.Read(): %s\n", err)
 		return
 	}
-	fmt.Printf("temp: %.2f°C (%.2f°F)\n", temp, temp*1.8 + 32)
+	fmt.Printf("temp: %.2f°C (%.2f°F)\n", temp, temp*1.8+32)
 
 	// TODO: loop and do stuff
 }
