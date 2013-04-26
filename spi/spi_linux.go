@@ -74,14 +74,18 @@ func Transaction(f *os.File, write, read []byte) error {
 		}
 	}
 	var length uint32
+	var wp, rp unsafe.Pointer
 	if write != nil {
+		wp = unsafe.Pointer(&write[0])
 		length = uint32(len(write))
-	} else {
+	}
+	if read != nil {
+		rp = unsafe.Pointer(&read[0])
 		length = uint32(len(read))
 	}
 	trx := SPIIOTransaction{
-		TXBuf: uint64(uintptr(unsafe.Pointer(&write[0]))),
-		RXBuf: uint64(uintptr(unsafe.Pointer(&write[0]))),
+		TXBuf: uint64(uintptr(wp)),
+		RXBuf: uint64(uintptr(rp)),
 		Len:   length,
 	}
 	return ioctl(f.Fd(), SPI_IOC_MESSAGE(1), unsafe.Pointer(&trx))
