@@ -7,7 +7,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/bpowers/goroast/devices"
+	"github.com/bpowers/gorpi/device"
+	"github.com/bpowers/gorpi/spi"
 	"log"
 	"os"
 	"runtime"
@@ -88,18 +89,17 @@ func main() {
 		return
 	}
 
-	tc1, err := devices.NewMax31855("/dev/spidev0.0")
+	tc1, err := device.Max31855(spi.Path(0, 0))
 	if err != nil {
-		fmt.Printf("error: devices.NewMax31855('/dev/spidev0.0'): %s\n", err)
-		return
+		log.Fatalf("devices.NewMax31855('/dev/spidev0.0'): %s\n", err)
 	}
 	defer tc1.Close()
 
 	temp, err := tc1.Read()
 	if err != nil {
-		fmt.Printf("error: tc1.Read(): %s\n", err)
-		return
+		log.Fatalf("tc1.Read(): %s\n", err)
 	}
+
 	fmt.Printf("temp: %.2f°C (%.2f°F)\n", temp, temp*1.8+32)
 
 	// TODO: loop and do stuff
