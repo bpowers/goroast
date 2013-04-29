@@ -12,6 +12,7 @@ import (
 	"os"
 	"runtime"
 	"runtime/pprof"
+	"time"
 )
 
 const (
@@ -81,13 +82,6 @@ func main() {
 	startProfiling()
 	defer stopProfiling()
 
-	// need to be root to do GPIO.
-	if os.Geteuid() != 0 {
-		fmt.Printf("%s requires root privileges. (try 'sudo `which %s`)\n",
-			os.Args[0], os.Args[0])
-		return
-	}
-
 	tc1, err := devices.NewMax31855("/dev/spidev0.0")
 	if err != nil {
 		fmt.Printf("error: devices.NewMax31855('/dev/spidev0.0'): %s\n", err)
@@ -95,12 +89,44 @@ func main() {
 	}
 	defer tc1.Close()
 
-	temp, err := tc1.Read()
+	pin, err := os.Create("/sys/class/gpio/gpio22/value")
 	if err != nil {
-		fmt.Printf("error: tc1.Read(): %s\n", err)
-		return
+		log.Fatalf("open failed: %s", err)
 	}
-	fmt.Printf("temp: %.2f°C (%.2f°F)\n", temp, temp*1.8+32)
+	defer func() {
+		fmt.Printf("shutting heater off\n")
+		pin.Write([]byte{'0'})
+	}()
 
-	// TODO: loop and do stuff
+	timer := time.Tick(500 * time.Millisecond)
+
+	pin.Write([]byte{'1'})
+
+	for {
+		<-timer
+
+		temp, err := tc1.Read()
+		if err != nil {
+			fmt.Printf("error: tc1.Read(): %s\n", err)
+			break
+		}
+		fmt.Printf("temp: %.2f°C (%.2f°F)\n", temp, temp*1.8+32)
+		if temp > 66 {
+			fmt.Printf("temp: threshold hit, cooling down\n")
+			break
+		}
+	}
+
+	pin.Write([]byte{'0'})
+
+	for {
+		<-timer
+
+		temp, err := tc1.Read()
+		if err != nil {
+			fmt.Printf("error: tc1.Read(): %s\n", err)
+			break
+		}
+		fmt.Printf("temp: %.2f°C (%.2f°F)\n", temp, temp*1.8+32)
+	}
 }
