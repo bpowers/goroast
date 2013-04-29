@@ -7,7 +7,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/bpowers/goroast/devices"
+	"github.com/bpowers/gorpi/device"
+	"github.com/bpowers/gorpi/spi"
 	"log"
 	"os"
 	"runtime"
@@ -82,10 +83,9 @@ func main() {
 	startProfiling()
 	defer stopProfiling()
 
-	tc1, err := devices.NewMax31855("/dev/spidev0.0")
+	tc1, err := device.Max31855(spi.Path(0, 0))
 	if err != nil {
-		fmt.Printf("error: devices.NewMax31855('/dev/spidev0.0'): %s\n", err)
-		return
+		log.Fatalf("devices.NewMax31855('/dev/spidev0.0'): %s", err)
 	}
 	defer tc1.Close()
 
