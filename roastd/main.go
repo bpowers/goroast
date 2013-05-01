@@ -7,8 +7,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/bpowers/gorpi/device"
-	"github.com/bpowers/gorpi/spi"
+	_ "github.com/bpowers/goembed/arch/raspberrypi"
+	"github.com/bpowers/goembed/device"
+	"github.com/bpowers/goembed/platform"
 	"log"
 	"os"
 	"runtime"
@@ -83,9 +84,14 @@ func main() {
 	startProfiling()
 	defer stopProfiling()
 
-	tc1, err := device.Max31855(spi.Path(0, 0))
+	maxSPI, err := platform.NewSPIPair(0, 0)
 	if err != nil {
-		log.Fatalf("devices.NewMax31855('/dev/spidev0.0'): %s", err)
+		log.Fatalf("platform.NewSPIPair(0, 0): %s\n", err)
+	}
+
+	tc1, err := device.Max31855(maxSPI)
+	if err != nil {
+		log.Fatalf("devices.NewMax31855(): %s", err)
 	}
 	defer tc1.Close()
 
