@@ -95,6 +95,9 @@ func main() {
 	}
 	defer tc1.Close()
 
+	temp, err := tc1.Read()
+	log.Printf("on startup, temp is %v (err: %v)", temp, err)
+
 	pin, err := platform.OpenGPIO(22, platform.GPOutput)
 	if err != nil {
 		log.Fatalf("platform.OpenGPIO(22, platform.GPOutput): %s", err)
@@ -112,7 +115,7 @@ func main() {
 	for {
 		<-timer
 
-		temp, err := tc1.Read()
+		temp, err = tc1.Read()
 		if err != nil {
 			fmt.Printf("error: tc1.Read(): %s\n", err)
 			break
