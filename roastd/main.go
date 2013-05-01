@@ -1,4 +1,4 @@
-// Copyright 2011 Bobby Powers. All rights reserved.
+// Copyright 2013 Bobby Powers. All rights reserved.
 // Use of this source code is governed by the MIT
 // license that can be found in the LICENSE file.
 
@@ -95,18 +95,19 @@ func main() {
 	}
 	defer tc1.Close()
 
-	pin, err := os.Create("/sys/class/gpio/gpio22/value")
+	pin, err := platform.OpenGPIO(22, platform.GPOutput)
 	if err != nil {
-		log.Fatalf("open failed: %s", err)
+		log.Fatalf("platform.OpenGPIO(22, platform.GPOutput): %s", err)
 	}
 	defer func() {
 		fmt.Printf("shutting heater off\n")
-		pin.Write([]byte{'0'})
+		pin.Write(0)
+		pin.Close()
 	}()
 
 	timer := time.Tick(500 * time.Millisecond)
 
-	pin.Write([]byte{'1'})
+	pin.Write(1)
 
 	for {
 		<-timer
@@ -123,7 +124,7 @@ func main() {
 		}
 	}
 
-	pin.Write([]byte{'0'})
+	pin.Write(0)
 
 	for {
 		<-timer
